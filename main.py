@@ -16,7 +16,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# BANCO DE DATOS
+# BANCO DE DATOS (TEXTO PLANO ULTRA CORTO)
 # ==========================================
 CEDULAS = {
     1: "CÉDULA 1: Derecho y Moral.",
@@ -39,95 +39,74 @@ CUESTIONARIO = {
     1: {
         "p": "¿Distinción por autonomía?",
         "ops": ["A) Moral heterónoma.", "B) Moral autónoma, Derecho heterónomo.", "C) Son iguales."],
-        "ok": "B) Moral autónoma, Derecho heterónomo."
+        "ok": "B"
     },
     2: {
         "p": "¿Norma imperativa vs permisiva?",
         "ops": ["A) Imperativa obliga; permisiva faculta.", "B) Se modifican por voluntad.", "C) Tienen cárcel."],
-        "ok": "A) Imperativa obliga; permisiva faculta."
+        "ok": "A"
     },
     3: {
         "p": "¿Cuándo hay derogación tácita?",
         "ops": ["A) Si es expresa.", "B) Nueva ley es incompatible.", "C) Por cumplimiento de plazo."],
-        "ok": "B) Nueva ley es incompatible."
+        "ok": "B"
     },
     4: {
         "p": "¿Qué es la Inexcusabilidad?",
         "ops": ["A) No fallar por dudas.", "B) Leyes sin lagunas.", "C) Juez debe resolver aun sin ley."],
-        "ok": "C) Juez debe resolver aun sin ley."
+        "ok": "C"
     },
     5: {
         "p": "¿Tipos de fuentes doctrinales?",
         "ops": ["A) Materiales y Formales.", "B) Internas y Externas.", "C) Penales y Decretos."],
-        "ok": "A) Materiales y Formales."
+        "ok": "A"
     },
     6: {
         "p": "¿Valor de costumbre en Civil?",
         "ops": ["A) Absoluto sobre ley.", "B) Solo cuando ley se remite.", "C) Rige en materia penal."],
-        "ok": "B) Solo cuando ley se remite."
+        "ok": "B"
     },
     7: {
         "p": "¿Efecto de sentencias (Art 3)?",
         "ops": ["A) General ciudadano.", "B) Relativo a la causa juzgada.", "C) Precedente obligatorio."],
-        "ok": "B) Relativo a la causa juzgada."
+        "ok": "B"
     },
     8: {
         "p": "¿Cuándo nace la persona?",
         "ops": ["A) Concepción.", "B) A los 18 años.", "C) Separación y vivir un instante."],
-        "ok": "C) Separación y vivir un instante."
+        "ok": "C"
     },
     9: {
         "p": "¿Qué ley rige marco económico?",
         "ops": ["A) Ley 21.595 de delitos.", "B) Código de Comercio.", "C) Ordenanza municipal."],
-        "ok": "A) Ley 21.595 de delitos."
+        "ok": "A"
     },
     10: {
         "p": "¿Qué es un Derecho Real?",
         "ops": ["A) Sobre una cosa sin respecto a persona.", "B) Contra personas obligadas.", "C) Vínculo mercantil."],
-        "ok": "A) Sobre una cosa sin respecto a persona."
+        "ok": "A"
     },
     11: {
         "p": "¿Qué frena el abuso del derecho?",
         "ops": ["A) Autonomía.", "B) La Buena Fe.", "C) Plazos de prescripción."],
-        "ok": "B) La Buena Fe."
+        "ok": "B"
     },
     12: {
         "p": "¿Qué es inmueble por destinación?",
         "ops": ["A) Muebles para uso del fundo.", "B) Adheridos al suelo.", "C) Acciones judiciales."],
-        "ok": "A) Muebles para uso del fundo."
+        "ok": "A"
     },
     13: {
         "p": "¿Diferencia en enajenación?",
-        "ops": ["A) Bienes muebles.", "B) Bienes raíces.", "C) Ninguna diferencia."],
-        "ok": "B) Bienes raíces."
+        "ops": ["A) Escritura mueble.", "B) Inmuebles requieren el CBR.", "C) Entrega material."],
+        "ok": "B"
     },
     14: {
-        "p": "¿Qué son bienes comerciables?",
-        "ops": ["A) Los que pueden venderse.", "B) Solo bienes raíces.", "C) Bienes públicos."],
-        "ok": "A) Los que pueden venderse."
+        "p": "¿Qué es un bien de uso público?",
+        "ops": ["A) Fiscal privado.", "B) De la nación y todos.", "C) Incomerciable absoluto."],
+        "ok": "B"
     }
 }
 
 # ==========================================
-# INTERFAZ
-# ==========================================
-st.markdown("<div class='titulo'>Examen USS</div>", unsafe_allow_html=True)
-
-puntaje = 0
-
-for num, data in CUESTIONARIO.items():
-    st.markdown(f"<div class='pregunta'><b>Pregunta {num}:</b> {data['p']}</div>", unsafe_allow_html=True)
-    respuesta = st.radio("Selecciona una opción:", data["ops"], key=f"q{num}")
-    
-    if respuesta:
-        if respuesta == data["ok"]:
-            st.markdown(f"<span class='ok'>✅ Correcto: {respuesta}</span>", unsafe_allow_html=True)
-            puntaje += 1
-        else:
-            st.markdown(f"<span class='fail'>❌ Incorrecto. La respuesta correcta es: {data['ok']}</span>", unsafe_allow_html=True)
-    st.markdown("---")
-
-# ==========================================
-# RESULTADO FINAL
-# ==========================================
-st.markdown(f"<div class='cuadro'>Tu puntaje final es: {puntaje} de {len(CUESTIONARIO)}</div>", unsafe_allow_html=True)
+# MAN
