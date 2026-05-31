@@ -6,13 +6,14 @@ import streamlit as st
 st.set_page_config(page_title="Evaluación Oral USS", layout="wide")
 
 # =====================================================================
-# ESTILOS CSS
+# ESTILOS CSS (Corregidos para evitar pantallas en blanco)
 # =====================================================================
 st.markdown("""
 <style>
     .titulo-panel { font-size: 28px; font-weight: bold; margin-bottom: 20px; color: #0C2340; }
     .cuadro-cedula { background-color: #F0F4F8; padding: 20px; border-radius: 8px; border-left: 6px solid #0C2340; color: #102A43; font-size: 20px; font-weight: bold; margin-bottom: 25px;}
     .cuadro-pregunta { background-color: #FFFBEA; padding: 20px; border-radius: 8px; border-left: 6px solid #D97706; color: #78350F; font-size: 18px; margin-bottom: 20px; font-weight: 500; }
+    .cuadro-resultado { background-color: #E6FFFA; padding: 25px; border-radius: 8px; border-left: 6px solid #319795; font-size: 22px; text-align: center; color: #234E52; }
     .feedback-correcta { color: #38A169; font-weight: bold; margin-top: 10px; }
     .feedback-incorrecta { color: #E53E3E; font-weight: bold; margin-top: 10px; }
 </style>
@@ -21,6 +22,7 @@ st.markdown("""
 # =====================================================================
 # BANCO DE DATOS DEL CEDULARIO OFICIAL (USS 2026)
 # =====================================================================
+# Mapeo de títulos de cédulas
 DATOS_CEDULAS = {
     1: "CÉDULA 1.- El Derecho y la Moral. Normas de uso y trato social.",
     2: "CÉDULA 2.- La norma jurídica.",
@@ -38,6 +40,7 @@ DATOS_CEDULAS = {
     14: "CÉDULA 14.- Bienes o cosas comerciables e incomerciables."
 }
 
+# Subpreguntas y respuestas del examen
 SUBPREGUNTAS = {
     1: [
         {
@@ -63,7 +66,4 @@ SUBPREGUNTAS = {
     ],
     3: [
         {
-            "enunciado": "¿Cuándo ocurre una derogación de tipo tacita de la ley en el ordenamiento jurídico chileno?",
-            "alternativas": [
-                "A) Cuando una nueva ley declara explícitamente abolida la ley anterior.",
-                "B) Cuando la nueva ley contiene disposiciones que no pueden conciliarse con la ley anterior, aunque no la mencione expresa
+            "enunciado": "¿Cuándo ocurre una derogación de tipo 'Tácita' de la ley en el ord
