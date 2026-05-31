@@ -19,25 +19,25 @@ st.markdown("""
 # BANCO DE DATOS DEL CEDULARIO OFICIAL (USS 2026)
 # =====================================================================
 DATOS_CEDULAS = {
-    1: "CÉDULA 1.- El Derecho y la Moral. Normas de uso y trato social.[span_0](start_span)[span_0](end_span)",
-    2: "CÉDULA 2.- La norma jurídica.[span_1](start_span)[span_1](end_span)",
-    3: "CÉDULA 3.- Vigencia, validez y eficacia del Derecho positivo.[span_2](start_span)[span_2](end_span)",
-    4: "CÉDULA 4.- La plenitud hermética del ordenamiento jurídico y las lagunas del Derecho.[span_3](start_span)[span_3](end_span)",
-    5: "CÉDULA 5.- Fuentes del ordenamiento jurídico.[span_4](start_span)[span_4](end_span)",
-    6: "CÉDULA 6.- La costumbre.[span_5](start_span)[span_5](end_span)",
-    7: "CÉDULA 7.- La jurisprudencia y la doctrina, como fuentes formales del Derecho.[span_6](start_span)[span_6](end_span)",
-    8: "CÉDULA 8.- La Relación Jurídica.[span_7](start_span)[span_7](end_span)",
-    9: "CÉDULA 9.- La persona jurídica.[span_8](start_span)[span_8](end_span)",
-    10: "CÉDULA 10.- Derechos reales y derechos personales.[span_9](start_span)[span_9](end_span)",
-    11: "CÉDULA 11.- Límites en el ejercicio de los derechos subjetivos y el abuso del derecho.[span_10](start_span)[span_10](end_span)",
-    12: "CÉDULA 12.- Los bienes (o cosas). Clasificación.[span_11](start_span)[span_11](end_span)",
-    13: "CÉDULA 13.- Régimen de bienes, bienes registrables y específicos.[span_12](start_span)[span_12](end_span)",
-    14: "CÉDULA 14.- Bienes o cosas comerciables e incomerciables.[span_13](start_span)[span_13](end_span)"
+    1: "CÉDULA 1.- El Derecho y la Moral. Normas de uso y trato social.",
+    2: "CÉDULA 2.- La norma jurídica.",
+    3: "CÉDULA 3.- Vigencia, validez y eficacia del Derecho positivo.",
+    4: "CÉDULA 4.- La plenitud hermética del ordenamiento jurídico y las lagunas del Derecho.",
+    5: "CÉDULA 5.- Fuentes del ordenamiento jurídico.",
+    6: "CÉDULA 6.- La costumbre.",
+    7: "CÉDULA 7.- La jurisprudencia y la doctrina, como fuentes formales del Derecho.",
+    8: "CÉDULA 8.- La Relación Jurídica.",
+    9: "CÉDULA 9.- La persona jurídica.",
+    10: "CÉDULA 10.- Derechos reales y derechos personales.",
+    11: "CÉDULA 11.- Límites en el ejercicio de los derechos subjetivos y el abuso del derecho.",
+    12: "CÉDULA 12.- Los bienes (o cosas). Clasificación.",
+    13: "CÉDULA 13.- Régimen de bienes, bienes registrables y específicos.",
+    14: "CÉDULA 14.- Bienes o cosas comerciables e incomerciables."
 }
 
 SUBPREGUNTAS = {
     1: {
-        "enunciado": "Respecto a las diferencias entre Derecho y Moral, ¿cuál es la distinción correcta según su autonomía o heteronomía?[span_14](start_span)[span_14](end_span)",
+        "enunciado": "Respecto a las diferencias entre Derecho y Moral, ¿cuál es la distinción correcta según su autonomía o heteronomía?",
         "alternativas": [
             "A) La Moral es heterónoma y el Derecho es autónomo.",
             "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado).",
@@ -46,12 +46,22 @@ SUBPREGUNTAS = {
         "correcta": "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado)."
     },
     2: {
-        "enunciado": "¿Qué distingue radicalmente a una norma jurídica imperativa de una permisiva?[span_15](start_span)[span_15](end_span)",
+        "enunciado": "¿Qué distingue radicalmente a una norma jurídica imperativa de una permisiva?",
         "alternativas": [
-            "A) La imperativa ordena hacer algo obligatorio; la permisiva concede una facultad o derecho al sujeto.[span_16](start_span)[span_16](end_span)",
+            "A) La imperativa ordena hacer algo obligatorio; la permisiva concede una facultad o derecho al sujeto.",
             "B) La imperativa puede ser modificada por la libre voluntad de las partes contratantes.",
             "C) Las normas permisivas conllevan sanciones de cárcel automáticas."
         ],
-        "correcta": "A) La imperativa ordena hacer algo obligatorio; la permisiva concede una facultad o derecho al sujeto.[span_17](start_span)[span_17](end_span)"
+        "correcta": "A) La imperativa ordena hacer algo obligatorio; la permisiva concede una facultad o derecho al sujeto."
     },
     3: {
+        "enunciado": "¿Cuándo ocurre una derogación de tipo tácita de la ley en el ordenamiento jurídico chileno?",
+        "alternativas": [
+            "A) Cuando una nueva ley declara explícitamente abolida la ley anterior.",
+            "B) Cuando la nueva ley contiene disposiciones incompatibles con la anterior, aunque no lo mencione explícitamente.",
+            "C) Cuando la ley cumple el plazo de tiempo fijado para su propia vigencia."
+        ],
+        "correcta": "B) Cuando la nueva ley contiene disposiciones incompatibles con la anterior, aunque no lo mencione explícitamente."
+    },
+    4: {
+        "enunciado": "¿En qué consiste el Principio de Inexcusabilidad judicial con
