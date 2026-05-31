@@ -1,112 +1,69 @@
 import streamlit as st
 
-# ==========================================
-# CONFIGURACIÓN Y ESTILOS
-# ==========================================
-st.set_page_config(page_title="Examen USS", layout="wide")
+# =====================================================================
+# CONFIGURACIÓN DE LA PÁGINA
+# =====================================================================
+st.set_page_config(page_title="Evaluación Oral USS", layout="wide")
 
+# =====================================================================
+# ESTILOS CSS
+# =====================================================================
 st.markdown("""
 <style>
-    .titulo { font-size: 24px; font-weight: bold; color: #0C2340; }
-    .cuadro { background-color: #F0F4F8; padding: 15px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px;}
-    .pregunta { background-color: #FFFBEA; padding: 15px; border-radius: 8px; font-size: 15px; margin-bottom: 15px; }
-    .ok { color: #38A169; font-weight: bold; }
-    .fail { color: #E53E3E; font-weight: bold; }
+    .titulo-panel { font-size: 28px; font-weight: bold; margin-bottom: 20px; color: #0C2340; }
+    .cuadro-cedula { background-color: #F0F4F8; padding: 20px; border-radius: 8px; border-left: 6px solid #0C2340; color: #102A43; font-size: 20px; font-weight: bold; margin-bottom: 25px;}
+    .cuadro-pregunta { background-color: #FFFBEA; padding: 20px; border-radius: 8px; border-left: 6px solid #D97706; color: #78350F; font-size: 18px; margin-bottom: 20px; font-weight: 500; }
+    .feedback-correcta { color: #38A169; font-weight: bold; margin-top: 10px; }
+    .feedback-incorrecta { color: #E53E3E; font-weight: bold; margin-top: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
-# ==========================================
-# BANCO DE DATOS (TEXTO PLANO ULTRA CORTO)
-# ==========================================
-CEDULAS = {
-    1: "CÉDULA 1: Derecho y Moral.",
-    2: "CÉDULA 2: La norma jurídica.",
-    3: "CÉDULA 3: Vigencia y validez.",
-    4: "CÉDULA 4: Lagunas del Derecho.",
-    5: "CÉDULA 5: Fuentes del Derecho.",
-    6: "CÉDULA 6: La costumbre.",
-    7: "CÉDULA 7: Jurisprudencia y doctrina.",
-    8: "CÉDULA 8: La Relación Jurídica.",
-    9: "CÉDULA 9: La persona jurídica.",
-    10: "CÉDULA 10: Derechos reales y personales.",
-    11: "CÉDULA 11: Abuso del derecho.",
-    12: "CÉDULA 12: Los bienes.",
-    13: "CÉDULA 13: Régimen de bienes raíces.",
-    14: "CÉDULA 14: Bienes comerciables."
+# =====================================================================
+# BANCO DE DATOS DEL CEDULARIO OFICIAL (USS 2026)
+# =====================================================================
+DATOS_CEDULAS = {
+    1: "CÉDULA 1.- El Derecho y la Moral. Normas de uso y trato social.",
+    2: "CÉDULA 2.- La norma jurídica.",
+    3: "CÉDULA 3.- Vigencia, validez y eficacia del Derecho positivo.",
+    4: "CÉDULA 4.- La plenitud hermética del ordenamiento jurídico y las lagunas del Derecho.",
+    5: "CÉDULA 5.- Fuentes del ordenamiento jurídico.",
+    6: "CÉDULA 6.- La costumbre.",
+    7: "CÉDULA 7.- La jurisprudencia y la doctrina, como fuentes formales del Derecho.",
+    8: "CÉDULA 8.- La Relación Jurídica.",
+    9: "CÉDULA 9.- La persona jurídica.",
+    10: "CÉDULA 10.- Derechos reales y derechos personales.",
+    11: "CÉDULA 11.- Límites en el ejercicio de los derechos subjetivos y el abuso del derecho.",
+    12: "CÉDULA 12.- Los bienes (o cosas). Clasificación.",
+    13: "CÉDULA 13.- Régimen de bienes, bienes registrables y específicos.",
+    14: "CÉDULA 14.- Bienes o cosas comerciables e incomerciables."
 }
 
-CUESTIONARIO = {
-    1: {
-        "p": "¿Distinción por autonomía?",
-        "ops": ["A) Moral heterónoma.", "B) Moral autónoma, Derecho heterónomo.", "C) Son iguales."],
-        "ok": "B"
-    },
-    2: {
-        "p": "¿Norma imperativa vs permisiva?",
-        "ops": ["A) Imperativa obliga; permisiva faculta.", "B) Se modifican por voluntad.", "C) Tienen cárcel."],
-        "ok": "A"
-    },
-    3: {
-        "p": "¿Cuándo hay derogación tácita?",
-        "ops": ["A) Si es expresa.", "B) Nueva ley es incompatible.", "C) Por cumplimiento de plazo."],
-        "ok": "B"
-    },
-    4: {
-        "p": "¿Qué es la Inexcusabilidad?",
-        "ops": ["A) No fallar por dudas.", "B) Leyes sin lagunas.", "C) Juez debe resolver aun sin ley."],
-        "ok": "C"
-    },
-    5: {
-        "p": "¿Tipos de fuentes doctrinales?",
-        "ops": ["A) Materiales y Formales.", "B) Internas y Externas.", "C) Penales y Decretos."],
-        "ok": "A"
-    },
-    6: {
-        "p": "¿Valor de costumbre en Civil?",
-        "ops": ["A) Absoluto sobre ley.", "B) Solo cuando ley se remite.", "C) Rige en materia penal."],
-        "ok": "B"
-    },
-    7: {
-        "p": "¿Efecto de sentencias (Art 3)?",
-        "ops": ["A) General ciudadano.", "B) Relativo a la causa juzgada.", "C) Precedente obligatorio."],
-        "ok": "B"
-    },
-    8: {
-        "p": "¿Cuándo nace la persona?",
-        "ops": ["A) Concepción.", "B) A los 18 años.", "C) Separación y vivir un instante."],
-        "ok": "C"
-    },
-    9: {
-        "p": "¿Qué ley rige marco económico?",
-        "ops": ["A) Ley 21.595 de delitos.", "B) Código de Comercio.", "C) Ordenanza municipal."],
-        "ok": "A"
-    },
-    10: {
-        "p": "¿Qué es un Derecho Real?",
-        "ops": ["A) Sobre una cosa sin respecto a persona.", "B) Contra personas obligadas.", "C) Vínculo mercantil."],
-        "ok": "A"
-    },
-    11: {
-        "p": "¿Qué frena el abuso del derecho?",
-        "ops": ["A) Autonomía.", "B) La Buena Fe.", "C) Plazos de prescripción."],
-        "ok": "B"
-    },
-    12: {
-        "p": "¿Qué es inmueble por destinación?",
-        "ops": ["A) Muebles para uso del fundo.", "B) Adheridos al suelo.", "C) Acciones judiciales."],
-        "ok": "A"
-    },
-    13: {
-        "p": "¿Diferencia en enajenación?",
-        "ops": ["A) Escritura mueble.", "B) Inmuebles requieren el CBR.", "C) Entrega material."],
-        "ok": "B"
-    },
-    14: {
-        "p": "¿Qué es un bien de uso público?",
-        "ops": ["A) Fiscal privado.", "B) De la nación y todos.", "C) Incomerciable absoluto."],
-        "ok": "B"
-    }
-}
-
-# ==========================================
-# MAN
+SUBPREGUNTAS = {
+    1: [
+        {
+            "enunciado": "Respecto a las diferencias entre Derecho y Moral, ¿cuál es la distinción correcta según su autonomía o heteronomía?",
+            "alternativas": [
+                "A) La Moral es heterónoma y el Derecho es autónomo.",
+                "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado).",
+                "C) Ambos órdenes poseen la misma naturaleza del trato social obligatorio."
+            ],
+            "correcta": "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado)."
+        }
+    ],
+    2: [
+        {
+            "enunciado": "¿Qué distingue radicalmente a una norma jurídica imperativa de una permisiva?",
+            "alternativas": [
+                "A) La imperativa ordena hacer algo de forma obligatoria; la permisiva concede una facultad o derecho al sujeto para actuar si lo desea.",
+                "B) La imperativa puede ser modificada por la libre voluntad de las partes contratantes.",
+                "C) Las normas permisivas conllevan sanciones de cárcel automáticas."
+            ],
+            "correcta": "A) La imperativa ordena hacer algo de forma obligatoria; la permisiva concede una facultad o derecho al sujeto para actuar si lo desea."
+        }
+    ],
+    3: [
+        {
+            "enunciado": "¿Cuándo ocurre una derogación de tipo tacita de la ley en el ordenamiento jurídico chileno?",
+            "alternativas": [
+                "A) Cuando una nueva ley declara explícitamente abolida la ley anterior.",
+                "B) Cuando la nueva ley contiene disposiciones que no pueden conciliarse con la ley anterior, aunque no la mencione expresa
