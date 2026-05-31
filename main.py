@@ -16,7 +16,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# BANCO DE DATOS (TEXTO PLANO ULTRA CORTO)
+# BANCO DE DATOS
 # ==========================================
 CEDULAS = {
     1: "CÉDULA 1: Derecho y Moral.",
@@ -97,4 +97,37 @@ CUESTIONARIO = {
         "ok": "A) Muebles para uso del fundo."
     },
     13: {
-        "p": "¿Diferencia en enajenación?"
+        "p": "¿Diferencia en enajenación?",
+        "ops": ["A) Bienes muebles.", "B) Bienes raíces.", "C) Ninguna diferencia."],
+        "ok": "B) Bienes raíces."
+    },
+    14: {
+        "p": "¿Qué son bienes comerciables?",
+        "ops": ["A) Los que pueden venderse.", "B) Solo bienes raíces.", "C) Bienes públicos."],
+        "ok": "A) Los que pueden venderse."
+    }
+}
+
+# ==========================================
+# INTERFAZ
+# ==========================================
+st.markdown("<div class='titulo'>Examen USS</div>", unsafe_allow_html=True)
+
+puntaje = 0
+
+for num, data in CUESTIONARIO.items():
+    st.markdown(f"<div class='pregunta'><b>Pregunta {num}:</b> {data['p']}</div>", unsafe_allow_html=True)
+    respuesta = st.radio("Selecciona una opción:", data["ops"], key=f"q{num}")
+    
+    if respuesta:
+        if respuesta == data["ok"]:
+            st.markdown(f"<span class='ok'>✅ Correcto: {respuesta}</span>", unsafe_allow_html=True)
+            puntaje += 1
+        else:
+            st.markdown(f"<span class='fail'>❌ Incorrecto. La respuesta correcta es: {data['ok']}</span>", unsafe_allow_html=True)
+    st.markdown("---")
+
+# ==========================================
+# RESULTADO FINAL
+# ==========================================
+st.markdown(f"<div class='cuadro'>Tu puntaje final es: {puntaje} de {len(CUESTIONARIO)}</div>", unsafe_allow_html=True)
