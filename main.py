@@ -65,4 +65,4 @@ CUESTIONARIO = {
     9: {"p": "¿Qué ley rige marco económico?", "ops": [f"A) {T9}", "B) C. Comercio.", "C) Ordenanza."], "ok": f"A) {T9}"},
     10: {"p": "¿Qué es un Derecho Real?", "ops": [f"A) {T10}", "B) Contra deudores.", "C) Mercantil."], "ok": f"A) {T10}"},
     11: {"p": "¿Qué frena el abuso del derecho?", "ops": ["A) Autonomía.", f"B) {T11}", "C) Plazos."], "ok": f"B) {T11}"},
-    12: {"p": "¿Qué es inmueble por destinació
+    12: {"p": "¿Qué es inmueble por destinación
