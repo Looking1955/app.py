@@ -1,28 +1,17 @@
 import streamlit as st
 
-# =====================================================================
-# CONFIGURACIÓN DE LA PÁGINA
-# =====================================================================
 st.set_page_config(page_title="Evaluación Oral USS", layout="wide")
 
-# =====================================================================
-# ESTILOS CSS (Corregidos para evitar pantallas en blanco)
-# =====================================================================
 st.markdown("""
 <style>
     .titulo-panel { font-size: 28px; font-weight: bold; margin-bottom: 20px; color: #0C2340; }
     .cuadro-cedula { background-color: #F0F4F8; padding: 20px; border-radius: 8px; border-left: 6px solid #0C2340; color: #102A43; font-size: 20px; font-weight: bold; margin-bottom: 25px;}
     .cuadro-pregunta { background-color: #FFFBEA; padding: 20px; border-radius: 8px; border-left: 6px solid #D97706; color: #78350F; font-size: 18px; margin-bottom: 20px; font-weight: 500; }
-    .cuadro-resultado { background-color: #E6FFFA; padding: 25px; border-radius: 8px; border-left: 6px solid #319795; font-size: 22px; text-align: center; color: #234E52; }
     .feedback-correcta { color: #38A169; font-weight: bold; margin-top: 10px; }
     .feedback-incorrecta { color: #E53E3E; font-weight: bold; margin-top: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
-# =====================================================================
-# BANCO DE DATOS DEL CEDULARIO OFICIAL (USS 2026)
-# =====================================================================
-# Mapeo de títulos de cédulas
 DATOS_CEDULAS = {
     1: "CÉDULA 1.- El Derecho y la Moral. Normas de uso y trato social.",
     2: "CÉDULA 2.- La norma jurídica.",
@@ -40,30 +29,80 @@ DATOS_CEDULAS = {
     14: "CÉDULA 14.- Bienes o cosas comerciables e incomerciables."
 }
 
-# Subpreguntas y respuestas del examen
 SUBPREGUNTAS = {
-    1: [
-        {
-            "enunciado": "Respecto a las diferencias entre Derecho y Moral, ¿cuál es la distinción correcta según su autonomía o heteronomía?",
-            "alternativas": [
-                "A) La Moral es heterónoma y el Derecho es autónomo.",
-                "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado).",
-                "C) Ambos órdenes poseen la misma naturaleza del trato social obligatorio."
-            ],
-            "correcta": "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado)."
-        }
-    ],
-    2: [
-        {
-            "enunciado": "¿Qué distingue radicalmente a una norma jurídica imperativa de una permisiva?",
-            "alternativas": [
-                "A) La imperativa ordena hacer algo de forma obligatoria; la permisiva concede una facultad o derecho al sujeto para actuar si lo desea.",
-                "B) La imperativa puede ser modificada por la libre voluntad de las partes contratantes.",
-                "C) Las normas permisivas conllevan sanciones de cárcel automáticas."
-            ],
-            "correcta": "A) La imperativa ordena hacer algo de forma obligatoria; la permisiva concede una facultad o derecho al sujeto para actuar si lo desea."
-        }
-    ],
-    3: [
-        {
-            "enunciado": "¿Cuándo ocurre una derogación de tipo 'Tácita' de la ley en el ord
+    1: [{
+        "enunciado": "Respecto a las diferencias entre Derecho y Moral, ¿cuál es la distinción correcta según su autonomía o heteronomía?",
+        "alternativas": [
+            "A) La Moral es heterónoma y el Derecho es autónomo.",
+            "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado).",
+            "C) Ambos órdenes poseen la misma naturaleza del trato social obligatorio."
+        ],
+        "correcta": "B) La Moral es autónoma (surge del propio sujeto) y el Derecho es heterónomo (es impuesto por una voluntad externa/Estado)."
+    }]
+}
+
+defaults = {
+    "cedula_actual": 1,
+    "fase": "SELECCION_CEDULA",
+    "respuestas_usuario": {}
+}
+
+for k, v in defaults.items():
+    if k not in st.session_state:
+        st.session_state[k] = v
+
+cedula = st.session_state.cedula_actual
+
+if st.session_state.fase == "SELECCION_CEDULA":
+    st.markdown("<div class='titulo-panel'>Examen de Introducción al Derecho (USS) ⚖️</div>", unsafe_allow_html=True)
+
+    opcion_cedula = st.selectbox(
+        "Listado Oficial de Cédulas:",
+        options=list(DATOS_CEDULAS.keys()),
+        format_func=lambda x: DATOS_CEDULAS[x]
+    )
+
+    st.session_state.cedula_actual = opcion_cedula
+
+    st.markdown(f"<div class='cuadro-cedula'>{DATOS_CEDULAS[opcion_cedula]}</div>", unsafe_allow_html=True)
+
+    if st.button("Comenzar a Responder esta Cédula 🚀", use_container_width=True):
+        st.session_state.fase = "SUBPREGUNTAS"
+        st.rerun()
+
+elif st.session_state.fase == "SUBPREGUNTAS":
+    if cedula not in SUBPREGUNTAS:
+        st.error("No existen preguntas configuradas para esta cédula.")
+        st.stop()
+
+    pregunta = SUBPREGUNTAS[cedula][0]
+
+    st.markdown(f"<div class='titulo-panel'>Evaluando: Cédula N. {cedula}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='cuadro-pregunta'>{pregunta['enunciado']}</div>", unsafe_allow_html=True)
+
+    respuesta = st.radio(
+        "Selecciona la opción correcta:",
+        pregunta["alternativas"],
+        key=f"res_{cedula}"
+    )
+
+    if st.button("Verificar Respuesta 🎯"):
+        st.session_state.respuestas_usuario[cedula] = respuesta
+        st.session_state.fase = "RESULTADOS"
+        st.rerun()
+
+elif st.session_state.fase == "RESULTADOS":
+    pregunta = SUBPREGUNTAS[cedula][0]
+    usuario = st.session_state.respuestas_usuario.get(cedula)
+
+    st.markdown("<div class='titulo-panel'>Resultado</div>", unsafe_allow_html=True)
+
+    if usuario == pregunta["correcta"]:
+        st.markdown("<div class='feedback-correcta'>🟢 Respuesta correcta.</div>", unsafe_allow_html=True)
+    else:
+        st.markdown("<div class='feedback-incorrecta'>🔴 Respuesta incorrecta.</div>", unsafe_allow_html=True)
+        st.success(f"Respuesta correcta: {pregunta['correcta']}")
+
+    if st.button("Volver al Menú"):
+        st.session_state.fase = "SELECCION_CEDULA"
+        st.rerun()
